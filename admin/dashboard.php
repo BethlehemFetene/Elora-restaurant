@@ -82,10 +82,12 @@ if (!isset($_SESSION['logged_in'])) {
 
                     <td>
 
+                        <a href="edit_menu.php?id=<?php echo $row['id']; ?>">
+                            <button>Edit</button>
+                        </a>
+
                         <a href="delete_menu.php?id=<?php echo $row['id']; ?>" onclick="return confirm('Are you sure you want to delete this item?')">
-
                             <button>Delete</button>
-
                         </a>
 
                     </td>

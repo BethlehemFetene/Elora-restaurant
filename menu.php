@@ -1,59 +1,67 @@
-<?php include("db/connection.php"); ?>
+<?php
+session_start();
+include("db/connection.php");
+?>
 
 <!DOCTYPE html>
-<html?>
+<html>
 
-    <head>
+<head>
 
-        <title>Menu</title>
+    <title>Menu</title>
 
-        <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/main.js"></script>
+</head>
 
-    </head>
+<body class="menu-page">
 
-    <body>
+    <?php include("includes/navbar.php"); ?>
 
-        <?php include("includes/navbar.php"); ?>
+    <div class="container">
 
-        <div class="container">
+        <h1>Our Full Menu</h1>
 
-            <h1>Our Full Menu</h1>
+        <div class="cards">
 
-            <div class="cards">
+            <?php
+            $query = "SELECT * FROM menu_items";
 
-                <?php
-                $query = "SELECT * FROM menu_items";
+            $result = mysqli_query($conn, $query);
 
-                $result = mysqli_query($conn, $query);
-
+            if ($result) {
                 while ($row = mysqli_fetch_assoc($result)) {
 
-                ?>
+            ?>
 
                     <div class="card">
 
-                        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
+                        <div class="card-img-wrap">
+                            <img src="assets/images/<?php echo $row['image']; ?>" alt="<?php echo htmlspecialchars($row['food_name']); ?>">
+                        </div>
 
-                        <h2><?php echo $row['food_name']; ?></h2>
-
-                        <p><?php echo $row['description']; ?></p>
-
-                        <p><?php echo $row['price']; ?> ETB</p>
-
-                        <a href="order.php?food=<?php echo $row['food_name']; ?>">
-                            <button>Order Now</button>
-                        </a>
+                        <div class="card-body">
+                            <h2><?php echo htmlspecialchars($row['food_name']); ?></h2>
+                            <p class="card-desc"><?php echo htmlspecialchars($row['description']); ?></p>
+                            <div class="card-footer">
+                                <span class="card-price"><?php echo number_format($row['price'], 2); ?> <small>ETB</small></span>
+                                <a href="cart.php?add=<?php echo $row['id']; ?>">
+                                    <button>+ Add</button>
+                                </a>
+                            </div>
+                        </div>
 
                     </div>
 
-                <?php } ?>
-
-            </div>
+            <?php }
+            } ?>
 
         </div>
 
-        <?php include("includes/footer.php"); ?>
+    </div>
 
-    </body>
+    <?php include("includes/footer.php"); ?>
 
-    </html>
+</body>
+
+</html>
