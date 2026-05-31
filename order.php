@@ -2,25 +2,39 @@
 
 include("db/connection.php");
 
+$id = intval($_GET['id']);
+
+$query = "SELECT * FROM menu_items WHERE id='$id'";
+
+$result = mysqli_query($conn, $query);
+
+$row = mysqli_fetch_assoc($result);
+
 if (isset($_POST['submit'])) {
 
     $customer_name = $_POST['customer_name'];
-    $food_name = $_POST['food_name'];
+
     $quantity = $_POST['quantity'];
-    $price = $_POST['price'];
 
-    $total_price = $quantity * $price;
+    $food_name = $row['food_name'];
 
-    $query = "INSERT INTO orders(customer_name, food_name, quantity, total_price)
-              VALUES('$customer_name','$food_name','$quantity','$total_price')";
+    $price = $row['price'];
 
-    mysqli_query($conn, $query);
+    $total_price = $price * $quantity;
 
-    echo "<script>alert('Order Submitted Successfully')</script>";
+    $query2 = "INSERT INTO orders(customer_name,food_name,quantity,total_price)
+
+               VALUES('$customer_name','$food_name','$quantity','$total_price')";
+
+    mysqli_query($conn, $query2);
+
+    echo "<script>alert('Order Placed Successfully')</script>";
 }
 
 ?>
+
 <!DOCTYPE html>
+
 <html>
 
 <head>
@@ -28,6 +42,7 @@ if (isset($_POST['submit'])) {
     <title>Order Food</title>
 
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/main.js"></script>
 
 </head>
 
@@ -37,18 +52,48 @@ if (isset($_POST['submit'])) {
 
     <div class="container">
 
+        <div class="card">
+
+            <img src="assets/images/<?php echo trim($row['image']); ?>"
+                class="food-image">
+
+            <div class="card-content">
+
+                <h2><?php echo $row['food_name']; ?></h2>
+
+                <p><?php echo $row['description']; ?></p>
+
+                <p class="price">
+
+                    <?php echo $row['price']; ?> ETB
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <br><br>
+
         <form method="POST">
 
-            <h1>Order Food</h1>
+            <h1>Place Your Order</h1>
 
-            <input type="text" name="customer_name" placeholder="Enter Your Name" required>
+            <input type="text"
+                name="customer_name"
+                placeholder="Your Name"
+                required>
 
-            <input type="text" name="food_name" value="<?php echo $_GET['food']; ?>" readonly>
+            <input type="number"
+                name="quantity"
+                placeholder="Quantity"
+                required>
 
-            <input type="number" name="quantity" placeholder="Quantity" required>
-            <input type="number" name="price" placeholder="Price" required>
+            <button type="submit" name="submit">
 
-            <button type="submit" name="submit">Submit Order</button>
+                Confirm Order
+
+            </button>
 
         </form>
 

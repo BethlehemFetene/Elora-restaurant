@@ -23,6 +23,7 @@ if (isset($_POST['login'])) {
         $_SESSION['logged_in'] = true;
 
         header("Location:index.php");
+        exit;
     } else {
 
         echo "<script>alert('Invalid Email or Password')</script>";
@@ -40,6 +41,7 @@ if (isset($_POST['login'])) {
     <title>Login</title>
 
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/main.js"></script>
 
 </head>
 

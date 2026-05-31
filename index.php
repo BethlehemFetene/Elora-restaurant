@@ -1,4 +1,7 @@
-<?php include("db/connection.php"); ?>
+<?php
+session_start();
+include("db/connection.php");
+?>
 
 <!DOCTYPE html>
 <html>
@@ -8,6 +11,7 @@
     <title>Restaurant Management System</title>
 
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/js/main.js"></script>
 
 </head>
 
@@ -30,35 +34,36 @@
 
             $result = mysqli_query($conn, $query);
 
-            while ($row = mysqli_fetch_assoc($result)) {
+            if ($result) { while ($row = mysqli_fetch_assoc($result)) {
 
             ?>
 
                 <div class="card">
 
-                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd">
+                    <div class="card-img-wrap">
+                        <img src="assets/images/<?php echo $row['image']; ?>" alt="<?php echo htmlspecialchars($row['food_name']); ?>">
+                    </div>
 
-                    <h2><?php echo $row['food_name']; ?></h2>
-
-                    <p><?php echo $row['description']; ?></p>
-
-                    <p><?php echo $row['price']; ?> ETB</p>
-
-                    <a href="order.php?food=<?php echo $row['food_name']; ?>">
-                        <button>Order Now</button>
-                    </a>
+                    <div class="card-body">
+                        <h2><?php echo htmlspecialchars($row['food_name']); ?></h2>
+                        <p class="card-desc"><?php echo htmlspecialchars($row['description']); ?></p>
+                        <div class="card-footer">
+                            <span class="card-price"><?php echo number_format($row['price'], 2); ?> <small>ETB</small></span>
+                            <a href="cart.php?add=<?php echo $row['id']; ?>">
+                                <button>+ Add</button>
+                            </a>
+                        </div>
+                    </div>
 
                 </div>
 
-            <?php } ?>
+            <?php }} ?>
 
         </div>
 
     </div>
 
     <?php include("includes/footer.php"); ?>
-
-    <script src="assets/js/main.js"></script>
 
 </body>
 

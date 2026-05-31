@@ -4,12 +4,61 @@ function orderMessage(){
 
 function validateReservation(){
 
-    let name = document.getElementById("name").value;
+    let name  = document.getElementById('name').value;
+    let phone = document.getElementById('phone').value;
 
-    if(name == ""){
-        alert("Name is required");
+    if(name.trim() === ''){
+        document.getElementById('name').style.borderColor = 'red';
+        return false;
+    }
+
+    let phonePattern = /^\+251[79][0-9]{8}$/;
+    if(!phonePattern.test(phone)){
+        document.getElementById('phone').style.borderColor = 'red';
         return false;
     }
 
     return true;
 }
+
+document.addEventListener('DOMContentLoaded', function(){
+
+    let phoneInput = document.getElementById('phone');
+    if(phoneInput){
+        phoneInput.value = '+251';
+        phoneInput.addEventListener('keydown', function(e){
+            if(this.selectionStart <= 4 && (e.key === 'Backspace' || e.key === 'Delete')){
+                e.preventDefault();
+            }
+        });
+        phoneInput.addEventListener('input', function(){
+            if(!this.value.startsWith('+251')){
+                this.value = '+251';
+            }
+        });
+    }
+
+});
+
+function toggleDarkMode(){
+    document.body.classList.toggle('dark');
+    let btn = document.getElementById('theme-btn');
+    if(document.body.classList.contains('dark')){
+        localStorage.setItem('theme', 'dark');
+        btn.textContent = '☀️ Light';
+    } else {
+        localStorage.setItem('theme', 'light');
+        btn.textContent = '🌙 Dark';
+    }
+}
+
+(function(){
+    document.addEventListener('DOMContentLoaded', function(){
+        let theme = localStorage.getItem('theme');
+        let btn = document.getElementById('theme-btn');
+        if(theme === 'dark'){
+            document.body.classList.add('dark');
+            if(btn) btn.textContent = '☀️ Light';
+        }
+    });
+})();
