@@ -11,6 +11,7 @@ include("db/connection.php");
     <title>Restaurant Management System</title>
 
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="assets/js/main.js"></script>
 
 </head>

@@ -102,6 +102,16 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE IF NOT EXISTS password_resets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(100) NOT NULL,
+    otp_code VARCHAR(10) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    used TINYINT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_email (email),
+    INDEX idx_otp (otp_code)
+);
 --
 -- Indexes for dumped tables
 --
@@ -136,6 +146,12 @@ ALTER TABLE `reservations`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `users` ADD COLUMN role ENUM('customer','admin') DEFAULT 'customer';
+ALTER TABLE `users` ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+
+SELECT @rownum := @rownum + 1 AS display_id, u.* 
+FROM users u, (SELECT @rownum := 0) r
+ORDER BY u.id;
 --
 -- AUTO_INCREMENT for dumped tables
 --
