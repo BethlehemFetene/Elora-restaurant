@@ -525,3 +525,138 @@ body.dark .cart-summary h2{
 body.menu-page{
     background: url('../images/menu.jpg') center/cover fixed;
 }
+
+/* Reservation */
+.reservation-page{
+    max-width:640px;
+}
+
+.reservation-card{
+    background:white;
+    border-radius:12px;
+    padding:28px;
+    margin-bottom:24px;
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+}
+
+body.dark .reservation-card{
+    background:#1e1e1e;
+}
+
+.reservation-card h1{
+    margin-bottom:8px;
+}
+
+.reservation-card h2{
+    margin:20px 0 12px;
+    font-size:1.2rem;
+}
+
+.reservation-lead{
+    color:#666;
+    margin-bottom:20px;
+    font-size:0.95rem;
+}
+
+body.dark .reservation-lead{
+    color:#aaa;
+}
+
+.reservation-check-form,
+.reservation-book-form{
+    box-shadow:none;
+    padding:0;
+    max-width:none;
+    margin:0;
+    background:transparent;
+}
+
+.reservation-fields label,
+.reservation-book-form label{
+    display:block;
+    font-weight:600;
+    margin-top:12px;
+    margin-bottom:4px;
+    font-size:0.9rem;
+}
+
+.reservation-fields input,
+.reservation-book-form input,
+.reservation-book-form select,
+.reservation-book-form textarea{
+    width:100%;
+    margin:0 0 4px;
+}
+
+.btn-reservation-primary{
+    margin-top:18px;
+    width:100%;
+    padding:12px;
+    font-size:1rem;
+}
+
+.btn-reservation-link{
+    display:inline-block;
+    margin-top:12px;
+    color:orange;
+    font-weight:bold;
+}
+
+.availability-ok{
+    background:#ecfdf5;
+    border:1px solid #6ee7b7;
+    color:#065f46;
+    padding:14px;
+    border-radius:8px;
+    margin-bottom:8px;
+}
+
+.availability-no{
+    background:#fef2f2;
+    border:1px solid #fca5a5;
+    color:#991b1b;
+    padding:14px;
+    border-radius:8px;
+}
+
+.occasion-hint{
+    background:#eff6ff;
+    border:1px solid #93c5fd;
+    color:#1e40af;
+    padding:10px 12px;
+    border-radius:8px;
+    margin-top:8px;
+    font-size:0.9rem;
+}
+
+body.dark .occasion-hint{
+    background:#1e3a5f;
+    border-color:#2563eb;
+    color:#93c5fd;
+}
+
+.table-pick-note{
+    color:#555;
+    margin:8px 0 12px;
+    font-size:0.9rem;
+}
+
+.reservation-alert{
+    padding:14px;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+.reservation-alert-error{
+    background:#fef2f2;
+    border:1px solid #fca5a5;
+    color:#991b1b;
+}
+
+.error-msg{
+    background:#fef2f2;
+    border:1px solid #fca5a5;
+    color:#991b1b;
+    padding:12px;
+    border-radius:8px;
+}
