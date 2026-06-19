@@ -1,47 +1,18 @@
 function validatePassword() {
-  var password = document.getElementById("password").value;
-  var confirm = document.getElementById("confirm_password").value;
+  var password = document.getElementById("password");
+  var confirm = document.getElementById("confirm_password");
 
-  if (password.length < 6) {
+  if (!password || !confirm) return true;
+
+  if (password.value.length < 6) {
     alert("Password must be at least 6 characters long.");
-    document.getElementById("password").classList.add("error-border");
+    password.classList.add("error-border");
     return false;
   }
 
-  if (password !== confirm) {
+  if (password.value !== confirm.value) {
     alert("Passwords do not match.");
-    document.getElementById("confirm_password").classList.add("error-border");
-    return false;
-  }
-
-  return true;
-}
-
-// Remove red border when user starts typing
-document.getElementById("password").addEventListener("input", function () {
-  this.classList.remove("error-border");
-});
-document
-  .getElementById("confirm_password")
-  .addEventListener("input", function () {
-    this.classList.remove("error-border");
-  });
-function orderMessage() {
-  alert("Order Submitted Successfully");
-}
-
-function validateReservation() {
-  let name = document.getElementById("name").value;
-  let phone = document.getElementById("phone").value;
-
-  if (name.trim() === "") {
-    document.getElementById("name").style.borderColor = "red";
-    return false;
-  }
-
-  let phonePattern = /^\+251[79][0-9]{8}$/;
-  if (!phonePattern.test(phone)) {
-    document.getElementById("phone").style.borderColor = "red";
+    confirm.classList.add("error-border");
     return false;
   }
 
@@ -49,9 +20,25 @@ function validateReservation() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  let phoneInput = document.getElementById("phone");
+  var password = document.getElementById("password");
+  var confirm = document.getElementById("confirm_password");
+
+  if (password) {
+    password.addEventListener("input", function () {
+      this.classList.remove("error-border");
+    });
+  }
+  if (confirm) {
+    confirm.addEventListener("input", function () {
+      this.classList.remove("error-border");
+    });
+  }
+
+  var phoneInput = document.getElementById("phone");
   if (phoneInput) {
-    phoneInput.value = "+251";
+    if (phoneInput.value === "" || phoneInput.value === "+251") {
+      phoneInput.value = "+251";
+    }
     phoneInput.addEventListener("keydown", function (e) {
       if (
         this.selectionStart <= 4 &&
@@ -66,27 +53,82 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   }
+
+  var theme = localStorage.getItem("theme");
+  var btn = document.getElementById("theme-btn");
+  if (theme === "dark") {
+    document.body.classList.add("dark");
+    if (btn) btn.textContent = "☀️ Light";
+  }
 });
 
-function toggleDarkMode() {
-  document.body.classList.toggle("dark");
-  let btn = document.getElementById("theme-btn");
-  if (document.body.classList.contains("dark")) {
-    localStorage.setItem("theme", "dark");
-    btn.textContent = "☀️ Light";
+function orderMessage() {
+  alert("Order Submitted Successfully");
+}
+
+function validateReservation() {
+  var name = document.getElementById("name");
+  var phone = document.getElementById("phone");
+  var tableId = document.getElementById("table_id");
+
+  if (name && name.value.trim() === "") {
+    name.style.borderColor = "red";
+    name.focus();
+    return false;
+  }
+
+  if (phone) {
+    var phonePattern = /^\+251[79][0-9]{8}$/;
+    if (!phonePattern.test(phone.value)) {
+      phone.style.borderColor = "red";
+      phone.focus();
+      alert("Please enter a valid Ethiopian phone number (+251...).");
+      return false;
+    }
+  }
+
+  if (tableId && tableId.value === "") {
+    alert("Please choose a table.");
+    return false;
+  }
+
+  return true;
+}
+
+function toggleOccasionNote(value) {
+  var noteDiv = document.getElementById("occasion-note");
+  var hintText = document.getElementById("occasion-hint-text");
+
+  if (!noteDiv || !hintText) return;
+
+  var hints = {
+    birthday:
+      "Happy birthday! Tell us if you want a cake, candles, or decorations in special requests.",
+    anniversary:
+      "Congratulations! Mention flowers, champagne, or a quiet table in special requests.",
+    date_night: "We can suggest a quieter table — add any preferences below.",
+    business: "Need a private or quiet area? Describe it in special requests.",
+    graduation: "Tell us how many are celebrating so we can prepare.",
+    other: "Describe your celebration in special requests.",
+    none: "",
+  };
+
+  if (value !== "none" && hints[value]) {
+    hintText.textContent = hints[value];
+    noteDiv.style.display = "block";
   } else {
-    localStorage.setItem("theme", "light");
-    btn.textContent = "🌙 Dark";
+    noteDiv.style.display = "none";
   }
 }
 
-(function () {
-  document.addEventListener("DOMContentLoaded", function () {
-    let theme = localStorage.getItem("theme");
-    let btn = document.getElementById("theme-btn");
-    if (theme === "dark") {
-      document.body.classList.add("dark");
-      if (btn) btn.textContent = "☀️ Light";
-    }
-  });
-})();
+function toggleDarkMode() {
+  document.body.classList.toggle("dark");
+  var btn = document.getElementById("theme-btn");
+  if (document.body.classList.contains("dark")) {
+    localStorage.setItem("theme", "dark");
+    if (btn) btn.textContent = "☀️ Light";
+  } else {
+    localStorage.setItem("theme", "light");
+    if (btn) btn.textContent = "🌙 Dark";
+  }
+}

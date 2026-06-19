@@ -77,6 +77,34 @@ CREATE TABLE `ratings` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `restaurant_tables`
+--
+
+CREATE TABLE `restaurant_tables` (
+  `id` int NOT NULL,
+  `table_number` int NOT NULL,
+  `capacity` int NOT NULL DEFAULT 2,
+  `location` varchar(50) NOT NULL DEFAULT 'center',
+  `is_active` tinyint(1) NOT NULL DEFAULT 1
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `restaurant_tables` (`id`, `table_number`, `capacity`, `location`, `is_active`) VALUES
+(1, 1, 2, 'window', 1),
+(2, 2, 2, 'window', 1),
+(3, 3, 4, 'window', 1),
+(4, 4, 4, 'center', 1),
+(5, 5, 4, 'center', 1),
+(6, 6, 4, 'center', 1),
+(7, 7, 6, 'center', 1),
+(8, 8, 6, 'patio', 1),
+(9, 9, 6, 'patio', 1),
+(10, 10, 8, 'patio', 1),
+(11, 11, 8, 'private', 1),
+(12, 12, 2, 'private', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `reservations`
 --
 
@@ -86,7 +114,11 @@ CREATE TABLE `reservations` (
   `phone` varchar(20) NOT NULL,
   `reservation_date` date NOT NULL,
   `reservation_time` time NOT NULL,
-  `guests` int NOT NULL
+  `guests` int NOT NULL,
+  `table_id` int DEFAULT NULL,
+  `occasion` varchar(50) DEFAULT 'none',
+  `special_request` text,
+  `status` enum('pending','confirmed','cancelled') DEFAULT 'pending'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -135,6 +167,12 @@ ALTER TABLE `ratings`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `restaurant_tables`
+--
+ALTER TABLE `restaurant_tables`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `reservations`
 --
 ALTER TABLE `reservations`
@@ -175,6 +213,12 @@ ALTER TABLE `ratings`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `restaurant_tables`
+--
+ALTER TABLE `restaurant_tables`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+--
 -- AUTO_INCREMENT for table `reservations`
 --
 ALTER TABLE `reservations`
@@ -185,6 +229,42 @@ ALTER TABLE `reservations`
 --
 ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+-- --------------------------------------------------------
+-- Upgrades for existing databases (safe to re-run errors on duplicate column)
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `restaurant_tables` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `table_number` int NOT NULL,
+  `capacity` int NOT NULL DEFAULT 2,
+  `location` varchar(50) NOT NULL DEFAULT 'center',
+  `is_active` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+INSERT INTO `restaurant_tables` (`table_number`, `capacity`, `location`)
+SELECT * FROM (
+  SELECT 1, 2, 'window' UNION ALL
+  SELECT 2, 2, 'window' UNION ALL
+  SELECT 3, 4, 'window' UNION ALL
+  SELECT 4, 4, 'center' UNION ALL
+  SELECT 5, 4, 'center' UNION ALL
+  SELECT 6, 4, 'center' UNION ALL
+  SELECT 7, 6, 'center' UNION ALL
+  SELECT 8, 6, 'patio' UNION ALL
+  SELECT 9, 6, 'patio' UNION ALL
+  SELECT 10, 8, 'patio' UNION ALL
+  SELECT 11, 8, 'private' UNION ALL
+  SELECT 12, 2, 'private'
+) AS seed
+WHERE NOT EXISTS (SELECT 1 FROM `restaurant_tables` LIMIT 1);
+
+ALTER TABLE `reservations`
+  ADD COLUMN `table_id` int DEFAULT NULL,
+  ADD COLUMN `occasion` varchar(50) DEFAULT 'none',
+  ADD COLUMN `special_request` text,
+  ADD COLUMN `status` enum('pending','confirmed','cancelled') DEFAULT 'pending';
+
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
