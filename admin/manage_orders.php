@@ -55,7 +55,7 @@ include("../db/connection.php");
 
                     <td><?php echo $row['quantity']; ?></td>
 
-                    <td><?php echo $row['total_price']; ?></td>
+                    <td><?php echo $row['total_price']; ?> ETB</td>
 
                     <td><?php echo $row['order_date']; ?></td>
 

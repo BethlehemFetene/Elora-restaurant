@@ -5,21 +5,21 @@ include("../db/connection.php");
 if(isset($_POST['submit'])){
 
     $food_name = $_POST['food_name'];
+
     $description = $_POST['description'];
+
     $price = $_POST['price'];
 
-    $image = $_FILES['image']['name'];
-    $tmp = $_FILES['image']['tmp_name'];
+    $image = $_POST['image'];
 
-    move_uploaded_file($tmp, "../assets/images/" . $image);
+    $query = "INSERT INTO menu_items(food_name,description,price,image)
 
-    $query = "INSERT INTO menu_items(food_name, description, price, image)
               VALUES('$food_name','$description','$price','$image')";
 
     mysqli_query($conn, $query);
 
     header("Location:dashboard.php");
-    exit;
+
 }
 
 ?>
@@ -30,47 +30,57 @@ if(isset($_POST['submit'])){
 
 <head>
 
-    <title>Add Menu</title>
+    <title>Add Menu Item</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
-    <script src="../assets/js/main.js"></script>
 
 </head>
 
 <body>
 
+<div class="admin-hero">
+
+    <div class="admin-overlay">
+
+        <h1>Add New Menu Item</h1>
+
+        <p>Create beautiful food listings for customers</p>
+
+    </div>
+
+</div>
+
 <div class="container">
 
-<form method="POST" enctype="multipart/form-data">
+    <form method="POST" class="menu-form">
 
-    <h1>Add Menu Item</h1>
+        <input type="text"
+               name="food_name"
+               placeholder="Food Name"
+               required>
 
-    <input type="text"
-           name="food_name"
-           placeholder="Food Name"
-           required>
+        <textarea
+               name="description"
+               placeholder="Food Description"
+               required></textarea>
 
-    <textarea name="description"
-              placeholder="Description"
-              required></textarea>
+        <input type="number"
+               name="price"
+               placeholder="Price"
+               required>
 
-    <input type="number"
-           name="price"
-           placeholder="Price"
-           required>
+        <input type="text"
+               name="image"
+               placeholder="Image Name e.g burger.jpg"
+               required>
 
-    <input type="file"
-           name="image"
-           accept="image/*"
-           required>
+        <button type="submit" name="submit">
 
-    <button type="submit" name="submit">
+            Add Menu Item
 
-        Add Food
+        </button>
 
-    </button>
-
-</form>
+    </form>
 
 </div>
 
