@@ -10,7 +10,7 @@ include("db/connection.php");
 
     <title>Menu</title>
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
     <script src="assets/js/main.js"></script>
 </head>
 
@@ -20,7 +20,10 @@ include("db/connection.php");
 
     <div class="container">
 
-        <h1>Our Full Menu</h1>
+        <div class="section-header">
+            <span class="section-label">Our Menu</span>
+            <h2>Every Dish, a Story</h2>
+        </div>
 
         <div class="cards">
 

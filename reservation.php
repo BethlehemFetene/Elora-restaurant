@@ -85,9 +85,8 @@ if ($dbReady && isset($_POST['submit_reservation'])) {
         $query = "INSERT INTO reservations(customer_name, phone, reservation_date, reservation_time, guests, table_id, occasion, special_request, status)
                   VALUES('$name','$phone','$date','$time','$guests','$table_id','$occasion','$special','pending')";
         if (mysqli_query($conn, $query)) {
-            $success = true;
-            $checked = false;
-            $available_tables = [];
+            header("Location: index.php?reserved=1");
+            exit;
         } else {
             $error = 'Could not save reservation. Run the upgrade section in restaurant_db.sql if you have not yet.';
         }
@@ -99,7 +98,7 @@ if ($dbReady && isset($_POST['submit_reservation'])) {
 <html>
 <head>
     <title>Reserve A Table</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
     <script src="assets/js/main.js"></script>
 </head>
 <body>
@@ -206,7 +205,7 @@ if ($dbReady && isset($_POST['submit_reservation'])) {
                                id="phone"
                                name="phone"
                                placeholder="+251XXXXXXXXX"
-                               pattern="\+251[79][0-9]{8}"
+                               pattern="(\+251[79][0-9]{8}|0[79][0-9]{8})"
                                maxlength="13"
                                required>
 

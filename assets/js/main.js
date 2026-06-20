@@ -56,9 +56,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var theme = localStorage.getItem("theme");
   var btn = document.getElementById("theme-btn");
-  if (theme === "dark") {
-    document.body.classList.add("dark");
-    if (btn) btn.textContent = "☀️ Light";
+  if(theme === "light"){
+    document.documentElement.classList.add("light-mode");
+    if(btn) btn.textContent = "🌙 Dark";
+  } else {
+    document.documentElement.classList.remove("light-mode");
+    if(btn) btn.textContent = "☀️ Light";
+  }
+
+  if (window.location.hash === '#register') {
+    showRegisterSection();
   }
 });
 
@@ -78,11 +85,11 @@ function validateReservation() {
   }
 
   if (phone) {
-    var phonePattern = /^\+251[79][0-9]{8}$/;
+    var phonePattern = /^(\+251[79][0-9]{8}|0[79][0-9]{8})$/;
     if (!phonePattern.test(phone.value)) {
       phone.style.borderColor = "red";
       phone.focus();
-      alert("Please enter a valid Ethiopian phone number (+251...).");
+      alert("Please enter a valid Ethiopian phone number.");
       return false;
     }
   }
@@ -93,6 +100,14 @@ function validateReservation() {
   }
 
   return true;
+}
+
+function showRegisterSection() {
+  var section = document.getElementById("register");
+  if (!section) return;
+  section.style.display = "block";
+  window.location.hash = '#register';
+  section.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function toggleOccasionNote(value) {
@@ -121,14 +136,15 @@ function toggleOccasionNote(value) {
   }
 }
 
-function toggleDarkMode() {
-  document.body.classList.toggle("dark");
+function toggleDarkMode(){
   var btn = document.getElementById("theme-btn");
-  if (document.body.classList.contains("dark")) {
+  if(document.documentElement.classList.contains("light-mode")){
+    document.documentElement.classList.remove("light-mode");
     localStorage.setItem("theme", "dark");
-    if (btn) btn.textContent = "☀️ Light";
+    if(btn) btn.textContent = "☀️ Light";
   } else {
+    document.documentElement.classList.add("light-mode");
     localStorage.setItem("theme", "light");
-    if (btn) btn.textContent = "🌙 Dark";
+    if(btn) btn.textContent = "🌙 Dark";
   }
 }

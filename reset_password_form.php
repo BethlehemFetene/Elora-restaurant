@@ -57,22 +57,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['reset'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reset Password</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Reset Password — Elora Restaurant</title>
+    <link rel="stylesheet" href="assets/css/auth.css">
 </head>
 <body>
-<?php include("includes/navbar.php"); ?>
-<div class="container">
-    <form method="POST">
-        <h1>Set New Password</h1>
+
+<nav class="main-nav">
+    <a href="index.php" class="nav-logo">Elora Restaurant</a>
+    <ul class="nav-links">
+        <li><a href="index.php">Home</a></li>
+        <li><a href="index.php#menu">Menu</a></li>
+        <li><a href="index.php#reservation">Reservation</a></li>
+        <li><a href="cart.php">Cart</a></li>
+    </ul>
+    <a href="index.php#reservation" class="nav-cta">Book a Table</a>
+</nav>
+
+<div class="auth-page">
+    <div class="auth-card">
+        <h1 class="auth-title">Set New Password</h1>
+        <p class="auth-subtitle">Choose a strong password for your account</p>
         <?php if($error): ?>
             <div class="error-msg"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
-        <input type="password" name="password" placeholder="New Password (min 6 chars)" required minlength="6">
-        <input type="password" name="confirm_password" placeholder="Confirm New Password" required>
-        <button type="submit" name="reset">Change Password</button>
-    </form>
+        <form method="POST">
+            <input type="password" name="password" placeholder="New password (min 6 chars)" required minlength="6">
+            <input type="password" name="confirm_password" placeholder="Confirm new password" required>
+            <button type="submit" name="reset">Change Password</button>
+        </form>
+    </div>
 </div>
-<?php include("includes/footer.php"); ?>
+
+<footer><p><span>Elora Restaurant</span> &nbsp;&mdash;&nbsp; All Rights Reserved &copy; 2026</p></footer>
+
 </body>
 </html>

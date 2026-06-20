@@ -58,7 +58,7 @@ $recent_reservations = mysqli_query(
 
 $recent_reviews = mysqli_query(
     $conn,
-    "SELECT customer_name, food_name, rating, created_at
+    "SELECT customer_name, food_name, rating
      FROM ratings
      ORDER BY id DESC
      LIMIT 5"
@@ -68,17 +68,31 @@ $recent_reviews = mysqli_query(
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Admin Dashboard — Elora Restaurant</title>
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <div class="container">
 
-        <div class="admin-header">
-            <h1><i class="fas fa-gauge-high"></i> Admin Dashboard</h1>
-            <a href="../logout.php" class="btn-back"><i class="fas fa-right-from-bracket"></i> Logout</a>
+<nav class="admin-nav">
+    <div class="admin-nav-logo">Elora Restaurant <span>Admin</span></div>
+    <ul class="admin-nav-links">
+        <li><a href="dashboard.php" class="active">Dashboard</a></li>
+        <li><a href="add_menu.php">Add Item</a></li>
+        <li><a href="manage_orders.php">Orders</a></li>
+        <li><a href="manage_reservations.php">Reservations</a></li>
+        <li><a href="manage_ratings.php">Reviews</a></li>
+    </ul>
+    <a href="../logout.php" class="admin-nav-logout">Logout</a>
+</nav>
+
+<div class="admin-page">
+
+    <div class="admin-page-header">
+        <div>
+            <span class="admin-page-label">Overview</span>
+            <h1>Admin Dashboard</h1>
         </div>
+    </div>
 
         <div class="dashboard-kpis">
             <div class="dashboard-kpi-card">
@@ -110,6 +124,11 @@ $recent_reviews = mysqli_query(
                 <i class="fas fa-plus"></i>
                 <h3>Add Menu Item</h3>
                 <p>Create a new dish with description, price, and image.</p>
+            </a>
+            <a class="admin-module-card" href="manage_menu.php">
+                <i class="fas fa-utensils"></i>
+                <h3>Manage Menu</h3>
+                <p>Edit menu items, update prices, and delete dishes.</p>
             </a>
             <a class="admin-module-card" href="manage_orders.php">
                 <i class="fas fa-receipt"></i>
@@ -184,7 +203,7 @@ $recent_reviews = mysqli_query(
                                         <td><?php echo htmlspecialchars($row['customer_name']); ?></td>
                                         <td><?php echo htmlspecialchars($row['food_name']); ?></td>
                                         <td><?php echo (int) $row['rating']; ?>★</td>
-                                        <td><?php echo isset($row['created_at']) ? date('M j, Y', strtotime($row['created_at'])) : '—'; ?></td>
+                                        <td>—</td>
                                     </tr>
                                 <?php endwhile; ?>
                             <?php else: ?>
@@ -196,6 +215,7 @@ $recent_reviews = mysqli_query(
             </div>
         </div>
 
-    </div>
+</div>
+
 </body>
 </html>

@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 
     <title>Order Food</title>
 
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="style.css">
     <script src="assets/js/main.js"></script>
 
 </head>

@@ -46,44 +46,51 @@ if (isset($_POST['login'])) {
 ?>
 
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
-    <title>Login</title>
-
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/main.js"></script>
-
+    <title>Login — Elora Restaurant</title>
+    <link rel="stylesheet" href="assets/css/auth.css">
 </head>
-
 <body>
 
-    <?php include("includes/navbar.php"); ?>
+<nav class="main-nav">
+    <a href="index.php" class="nav-logo">Elora Restaurant</a>
+    <ul class="nav-links">
+        <li><a href="index.php">Home</a></li>
+        <li><a href="index.php#menu">Menu</a></li>
+        <li><a href="index.php#reservation">Reservation</a></li>
+        <li><a href="index.php#ratings">Ratings</a></li>
+        <li><a href="cart.php">Cart</a></li>
+    </ul>
+    <a href="index.php#reservation" class="nav-cta">Book a Table</a>
+</nav>
 
-    <div class="container">
+<div class="auth-page">
+    <div class="auth-card">
+        <h1 class="auth-title">Welcome Back</h1>
+        <p class="auth-subtitle">Sign in to your account</p>
 
         <?php if($success_message): ?>
-        <div class="success-msg" style="margin-bottom: 20px;"><?php echo $success_message; ?></div>
-    <?php endif; ?>
-    <form method="POST">
-        <h1>Login</h1>
-        <?php if(isset($error)) echo "<p class='error-msg'>$error</p>"; ?>
+            <div class="success-msg"><?php echo $success_message; ?></div>
+        <?php endif; ?>
         <?php if($reset_success): ?>
             <div class="success-msg"><?php echo $reset_success; ?></div>
         <?php endif; ?>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <p><a href="forgot_password.php">Forgot Password?</a></p>
-        <button type="submit" name="login">Login</button>
-        <p>Don't have an account? <a href="register.php">Register</a></p>
-    </form>
+        <?php if(isset($error)): ?>
+            <div class="error-msg"><?php echo $error; ?></div>
+        <?php endif; ?>
 
+        <form method="POST">
+            <input type="email" name="email" placeholder="Email address" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <a href="forgot_password.php" class="auth-link">Forgot Password?</a>
+            <button type="submit" name="login">Login</button>
+            <p class="auth-switch">Don't have an account? <a href="index.php#register">Register</a></p>
+        </form>
     </div>
+</div>
 
-    <?php include("includes/footer.php"); ?>
+<footer><p><span>Elora Restaurant</span> &nbsp;&mdash;&nbsp; All Rights Reserved &copy; 2026</p></footer>
 
 </body>
-
 </html>
