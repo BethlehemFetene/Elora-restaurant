@@ -87,14 +87,17 @@ $reviews_result = mysqli_query($conn, $reviews_query);
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="rating"><i class="fas fa-star"></i> Rating</label>
-                        <select id="rating" name="rating" required>
-                            <option value="">Select rating...</option>
-                            <?php for ($i = 5; $i >= 1; $i--): ?>
-                                <option value="<?php echo $i; ?>"><?php echo $i; ?> star<?php echo $i > 1 ? 's' : ''; ?>
-                                </option>
+                        <label><i class="fas fa-star"></i> Rating</label>
+                        <div class="star-rating-input" style="display:flex;gap:12px;align-items:center;">
+                            <?php for($i=1;$i<=5;$i++): ?>
+                            <label style="cursor:pointer;">
+                                <input type="radio" name="rating" value="<?php echo $i; ?>" style="display:none;" required>
+                                <span class="star" data-value="<?php echo $i; ?>"
+                                  style="font-size:32px;color:#ccc;transition:color 0.15s;cursor:pointer;">★</span>
+                            </label>
                             <?php endfor; ?>
-                        </select>
+                            <span id="rating-display" style="color:#666;margin-left:8px;font-size:13px;"></span>
+                        </div>
                     </div>
                 </div>
 
@@ -164,6 +167,44 @@ $reviews_result = mysqli_query($conn, $reviews_query);
     </div>
 
     <?php include("includes/footer.php"); ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const starInputs = document.querySelectorAll('.star-rating-input');
+  
+  starInputs.forEach(function(wrapper) {
+    const stars = wrapper.querySelectorAll('.star');
+    const display = wrapper.querySelector('#rating-display');
+    const radios = wrapper.querySelectorAll('input[name="rating"]');
+    
+    // Hover effect
+    stars.forEach(function(star, idx) {
+      star.addEventListener('mouseover', function() {
+        stars.forEach(function(s, i) {
+          s.style.color = i <= idx ? '#ffc107' : '#ccc';
+        });
+      });
+      
+      star.addEventListener('mouseout', function() {
+        const checked = wrapper.querySelector('input[name="rating"]:checked');
+        const val = checked ? parseInt(checked.value) - 1 : -1;
+        stars.forEach(function(s, i) {
+          s.style.color = i <= val ? '#ffc107' : '#ccc';
+        });
+      });
+      
+      // Click to select
+      star.addEventListener('click', function() {
+        radios[idx].checked = true;
+        stars.forEach(function(s, i) {
+          s.style.color = i <= idx ? '#ffc107' : '#ccc';
+        });
+        display.textContent = (idx + 1) + ' star' + (idx > 0 ? 's' : '');
+      });
+    });
+  });
+});
+</script>
 
 </body>
 
