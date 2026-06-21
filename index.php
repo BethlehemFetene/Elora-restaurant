@@ -208,7 +208,7 @@ if(isset($_POST['login'])){
                 <?php endif; ?>
 
         <?php if(!($checked && !empty($available_tables))): ?>
-        <form method="POST" class="elora-form">
+        <form method="POST" action="index.php#reservation" class="elora-form">
             <label>Date</label>
             <input type="date" name="avail_date" min="<?php echo $today; ?>" max="<?php echo $maxDate; ?>" value="<?php echo htmlspecialchars($avail_date); ?>" required>
             <label>Time</label>
@@ -222,7 +222,7 @@ if(isset($_POST['login'])){
         <?php if($checked && $dbReady): ?>
             <?php if(!empty($available_tables)): ?>
             <p class="availability-ok"><?php echo count($available_tables); ?> table(s) available for <?php echo $avail_guests; ?> guest(s) on <?php echo date('M j, Y',strtotime($avail_date)); ?> at <?php echo date('g:i A',strtotime($avail_time)); ?>.</p>
-            <form method="POST" class="elora-form" onsubmit="return validateReservation()">
+            <form method="POST" action="index.php#reservation" class="elora-form" onsubmit="return validateReservation()">
                 <input type="hidden" name="date" value="<?php echo htmlspecialchars($avail_date); ?>">
                 <input type="hidden" name="time" value="<?php echo htmlspecialchars($avail_time); ?>">
                 <input type="hidden" name="guests" value="<?php echo $avail_guests; ?>">
