@@ -58,32 +58,49 @@ if (isset($_POST['submit'])) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Forgot Password</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Forgot Password — Elora Restaurant</title>
+    <link rel="stylesheet" href="assets/css/auth.css">
 </head>
 <body>
-<?php include("includes/navbar.php"); ?>
-<div class="container">
-    <?php if($otp_sent): ?>
-        <form method="POST" action="verify_otp.php">
-            <h1>Enter OTP</h1>
+
+<nav class="main-nav">
+    <a href="index.php" class="nav-logo">Elora Restaurant</a>
+    <ul class="nav-links">
+        <li><a href="index.php">Home</a></li>
+        <li><a href="index.php#menu">Menu</a></li>
+        <li><a href="index.php#reservation">Reservation</a></li>
+        <li><a href="cart.php">Cart</a></li>
+    </ul>
+    <a href="index.php#reservation" class="nav-cta">Book a Table</a>
+</nav>
+
+<div class="auth-page">
+    <div class="auth-card">
+        <?php if($otp_sent): ?>
+            <h1 class="auth-title">Enter OTP</h1>
+            <p class="auth-subtitle">Check your email for the 6-digit code</p>
             <div class="success-msg"><?php echo htmlspecialchars($message); ?></div>
-            <input type="hidden" name="email" value="<?php echo htmlspecialchars($email_for_otp); ?>">
-            <input type="text" name="otp" placeholder="Enter 6-digit OTP" required maxlength="6" pattern="[0-9]{6}">
-            <button type="submit">Verify OTP</button>
-            <p><a href="forgot_password.php">Request new OTP</a></p>
-        </form>
-    <?php else: ?>
-        <form method="POST">
-            <h1>Forgot Password</h1>
+            <form method="POST" action="verify_otp.php">
+                <input type="hidden" name="email" value="<?php echo htmlspecialchars($email_for_otp); ?>">
+                <input type="text" name="otp" placeholder="6-digit OTP" required maxlength="6" pattern="[0-9]{6}">
+                <button type="submit">Verify OTP</button>
+                <p class="auth-switch"><a href="forgot_password.php">Request new OTP</a></p>
+            </form>
+        <?php else: ?>
+            <h1 class="auth-title">Forgot Password</h1>
+            <p class="auth-subtitle">Enter your email to receive a reset code</p>
             <?php if($message) echo "<div class='success-msg'>$message</div>"; ?>
             <?php if($error) echo "<div class='error-msg'>$error</div>"; ?>
-            <input type="email" name="email" placeholder="Your Registered Email" required>
-            <button type="submit" name="submit">Send OTP</button>
-            <p><a href="login.php">Back to Login</a></p>
-        </form>
-    <?php endif; ?>
+            <form method="POST">
+                <input type="email" name="email" placeholder="Your registered email" required>
+                <button type="submit" name="submit">Send OTP</button>
+                <p class="auth-switch"><a href="login.php">Back to Login</a></p>
+            </form>
+        <?php endif; ?>
+    </div>
 </div>
-<?php include("includes/footer.php"); ?>
+
+<footer><p><span>Elora Restaurant</span> &nbsp;&mdash;&nbsp; All Rights Reserved &copy; 2026</p></footer>
+
 </body>
 </html>

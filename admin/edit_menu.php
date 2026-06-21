@@ -40,43 +40,46 @@ if(isset($_POST['submit'])){
 <html>
 
 <head>
-    <title>Edit Menu Item</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <script src="../assets/js/main.js"></script>
+    <title>Edit Menu Item — Elora Restaurant Admin</title>
+    <link rel="stylesheet" href="../assets/css/admin.css">
 </head>
 
 <body>
+<?php include('admin_navbar.php'); ?>
 
-<div class="container">
+<div class="admin-page">
+    <div class="admin-page-header">
+        <div>
+            <span class="admin-page-label">Menu Management</span>
+            <h1>Edit Menu Item</h1>
+        </div>
+    </div>
 
-    <form method="POST" enctype="multipart/form-data">
+    <div class="admin-form-card">
+        <form method="POST" enctype="multipart/form-data">
 
-        <h1>Edit Menu Item</h1>
+            <label>Food Name</label>
+            <input type="text" name="food_name" value="<?php echo htmlspecialchars($row['food_name']); ?>" required>
 
-        <input type="text"
-               name="food_name"
-               value="<?php echo htmlspecialchars($row['food_name']); ?>"
-               required>
+            <label>Description</label>
+            <textarea name="description" required><?php echo htmlspecialchars($row['description']); ?></textarea>
 
-        <textarea name="description" required><?php echo htmlspecialchars($row['description']); ?></textarea>
+            <label>Price (ETB)</label>
+            <input type="number" name="price" value="<?php echo htmlspecialchars($row['price']); ?>" required>
 
-        <input type="number"
-               name="price"
-               value="<?php echo htmlspecialchars($row['price']); ?>"
-               required>
+            <div class="current-image">
+                Current Image: <strong><?php echo htmlspecialchars($row['image']); ?></strong>
+            </div>
 
-        <p>Current Image: <strong><?php echo htmlspecialchars($row['image']); ?></strong></p>
+            <label>Upload New Image</label>
+            <input type="file" name="image" accept="image/*">
 
-        <input type="file" name="image" accept="image/*">
+            <small>Leave empty to keep current image</small>
 
-        <small>Leave empty to keep current image</small>
+            <button type="submit" name="submit">Save Changes</button>
 
-        <br><br>
-
-        <button type="submit" name="submit">Save Changes</button>
-
-    </form>
-
+        </form>
+    </div>
 </div>
 
 </body>

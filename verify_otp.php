@@ -49,23 +49,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($otp)) {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Verify OTP</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <title>Verify OTP — Elora Restaurant</title>
+    <link rel="stylesheet" href="assets/css/auth.css">
 </head>
 <body>
-<?php include("includes/navbar.php"); ?>
-<div class="container">
-    <form method="POST">
-        <h1>Verify OTP</h1>
+
+<nav class="main-nav">
+    <a href="index.php" class="nav-logo">Elora Restaurant</a>
+    <ul class="nav-links">
+        <li><a href="index.php">Home</a></li>
+        <li><a href="index.php#menu">Menu</a></li>
+        <li><a href="index.php#reservation">Reservation</a></li>
+        <li><a href="cart.php">Cart</a></li>
+    </ul>
+    <a href="index.php#reservation" class="nav-cta">Book a Table</a>
+</nav>
+
+<div class="auth-page">
+    <div class="auth-card">
+        <h1 class="auth-title">Verify OTP</h1>
+        <p class="auth-subtitle">Enter the 6-digit code sent to your email</p>
         <?php if($error): ?>
             <div class="error-msg"><?php echo htmlspecialchars($error); ?></div>
         <?php endif; ?>
-        <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
-        <input type="text" name="otp" placeholder="Enter 6-digit OTP" required maxlength="6" pattern="[0-9]{6}">
-        <button type="submit">Verify & Reset Password</button>
-        <p><a href="forgot_password.php">Request new OTP</a></p>
-    </form>
+        <form method="POST">
+            <input type="hidden" name="email" value="<?php echo htmlspecialchars($email); ?>">
+            <input type="text" name="otp" placeholder="6-digit OTP" required maxlength="6" pattern="[0-9]{6}">
+            <button type="submit">Verify &amp; Continue</button>
+            <p class="auth-switch"><a href="forgot_password.php">Request new OTP</a></p>
+        </form>
+    </div>
 </div>
-<?php include("includes/footer.php"); ?>
+
+<footer><p><span>Elora Restaurant</span> &nbsp;&mdash;&nbsp; All Rights Reserved &copy; 2026</p></footer>
+
 </body>
 </html>
