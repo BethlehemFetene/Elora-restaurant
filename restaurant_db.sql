@@ -40,9 +40,9 @@ CREATE TABLE `menu_items` (
 --
 
 INSERT INTO `menu_items` (`id`, `food_name`, `description`, `price`, `image`) VALUES
-(1, 'Burger', 'Delicious beef burger', 250.00, 'burger.jpg'),
+(1, 'Burger', 'Delicious beef burger', 250.00, 'burgere.avif'),
 (2, 'Pizza', 'Cheesy pizza with toppings', 500.00, 'pizza.jpg'),
-(3, 'Pasta', 'Creamy chicken pasta', 350.00, 'pasta.jpg'),
+(3, 'Pasta', 'Creamy chicken pasta', 350.00, 'pasta.avif'),
 (4, 'Coffee', 'Hot Ethiopian coffee', 120.00, 'coffee.jpg');
 
 -- --------------------------------------------------------
