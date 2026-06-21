@@ -36,7 +36,8 @@ $reviews_result = mysqli_query($conn, $reviews_query);
 <head>
     <title>Reviews & Ratings</title>
     <meta name="description" content="Read reviews and rate our food. Share your dining experience with others.">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/elora.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="assets/js/main.js"></script>
 </head>
